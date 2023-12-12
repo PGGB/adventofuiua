@@ -23,14 +23,21 @@ PartOne
 
 Starts ← ⊚=@A⊡2⍉≡°□⊢Table
 Ends ← ⊚=@Z⊡2⍉≡°□⊢Table
-PartTwo ← (
-  Starts 0
-  ;⍢(
-    ≡(
-      ⊡:Connections
-      (⊡0|⊡1)NextCommand,
-    )
-    ⊙(&p⊢.+1)
-  )(¬/↧∊Ends)
+FindNextZ ← (
+  :0
+  ⍢(
+    ⊡:Connections
+    (⊡0|⊡1)NextCommand,
+    ⊙(+1)
+  )(↥¬∊:Ends ⊙(=0),,)
 )
-PartTwo
+GCM ← ;⍢(◿,:)(≠0)
+# StartLoop ← ⊏⍏≡FindNextZ Starts
+PartOne ← (
+  # since the amount of cycles from Starts to Ends
+  # is the same as the cycle length of Ends to Ends
+  # we can just find the LCM
+  ;≡FindNextZ Ends
+  /(÷⊃GCM×)
+)
+PartOne
